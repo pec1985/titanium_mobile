@@ -117,7 +117,11 @@
             touchStarted = NO;
             fireEvent = @"touchend";
             if (button.highlighted) {
-                fireActionEvent = [touch tapCount] == 1 ? @"click" : ([touch tapCount] == 2 ? @"dblclick" : nil);
+				if([self.proxy _hasListeners:@"dblclick"]) {
+					fireActionEvent = [touch tapCount] == 1 ? @"click" : ([touch tapCount] == 2 ? @"dblclick" : nil);
+				} else {
+					fireActionEvent = @"click";
+				}
             }
             break;
         case UITouchPhaseCancelled:
